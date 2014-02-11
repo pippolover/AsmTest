@@ -16,15 +16,18 @@ import org.objectweb.asm.Opcodes;
  */
 public class throwExceptionAdapter extends MethodVisitor {
 
-    public throwExceptionAdapter(MethodVisitor mv) {
+    private final String exceptionName;
+
+    public throwExceptionAdapter(MethodVisitor mv, String exceptionName) {
         super(ASM4, mv);
+        this.exceptionName = exceptionName;
     }
 
     @Override
     public void visitEnd() {
-        mv.visitTypeInsn(Opcodes.NEW, "java/lang/NullPointerException");
+        mv.visitTypeInsn(Opcodes.NEW, exceptionName);
         mv.visitInsn(Opcodes.DUP);
-        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/NullPointerException", "<init>", "()V");
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, exceptionName, "<init>", "()V");
         mv.visitInsn(Opcodes.ATHROW);
     }
 

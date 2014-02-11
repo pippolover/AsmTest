@@ -9,6 +9,8 @@ import static org.objectweb.asm.Opcodes.ASM4;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
+import com.alipay.asmtest.beans.constants.ASMEXCEPTIONS;
+
 /**
  * 
  * @author yimingwym 
@@ -38,7 +40,8 @@ public class faultInjectAdapter extends ClassVisitor {
              * runtime Exception 可以不申明就throw
              */
 
-            MethodVisitor throwExceptionVisitor = new throwExceptionAdapter(methodVisitor);
+            MethodVisitor throwExceptionVisitor = new throwExceptionAdapter(methodVisitor,
+                ASMEXCEPTIONS.NULLPOINTEXCEPTION);
 
             return throwExceptionVisitor;
         } else {
